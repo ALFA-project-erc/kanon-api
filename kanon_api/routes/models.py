@@ -152,10 +152,11 @@ def estimate_parameter(
 
     assert len(entries) == len(arguments)
 
-    for idx, entry in enumerate(entries):
-        if entry is None:
-            del entries[idx]
-            del arguments[idx]
+    to_delete = [idx for idx, entry in enumerate(entries) if entry is None]
+
+    for idx in to_delete[::-1]:
+        del entries[idx]
+        del arguments[idx]
 
     with warnings.catch_warnings():
         try:
