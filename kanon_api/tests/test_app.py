@@ -362,6 +362,24 @@ def test_estimate_parameter():
     assert response.status_code == 200
     assert response.json() == {"124": 1, "125": 2}
 
+    arg2 = list(range(5))
+    entries = [planet_double_arg_mercury(x, y, 1, 2) for y in arg2 for x in arg1]
+    entries[6] = None
+    response = client.post(
+        f"models/{planet_double_arg_mercury.formula_id}/estimate/",
+        json={
+            "arg1": arg1,
+            "arg2": [a + 2 for a in arg2],
+            "entries": [
+                planet_double_arg_mercury(x, y, 1, 2) for y in arg2 for x in arg1
+            ],
+            "params": {"124": None, "125": None},
+            "displacement": [0, 0, None],
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {"124": 1, "125": 2, "cy": -2}
+
     response = client.post(
         f"models/{planet_double_arg_mercury.formula_id}/estimate/",
         json={

@@ -48,7 +48,7 @@ def get_model(model: ModelCallable = Depends(model_path)):
 class TableContent(BaseModel):
     arg1: list[float]
     params: dict[int, float | None]
-    displacement: list[float] = [
+    displacement: list[float | None] = [
         0,
         0,
         0,
@@ -91,10 +91,23 @@ class TableContent(BaseModel):
         return OrderedDict({p: self.params[p] for p in self.model.params})
 
     def __call__(self, *args):
-        displaced_args = args[: 2 if self.arg2 else 1]
+        c0 = self.displacement[0]
+        cx = self.displacement[1]
+        cy = self.displacement[2]
+        if self.arg2 and cy is None:
+            cy = args[-1]
+            args = args[:-1]
+        if cx is None:
+            cx = args[-1]
+            args = args[:-1]
+        if c0 is None:
+            c0 = args[-1]
+            args = args[:-1]
+        displaced_args = [args[0] + cx]
+        if self.arg2:
+            displaced_args.append(args[1] + cy)
         return (
-            self.model(*displaced_args, *args[len(displaced_args) :])  # noqa: E203
-            + self.displacement[0]
+            self.model(*displaced_args, *args[len(displaced_args) :]) + c0  # noqa: E203
         )
 
     def __len__(self):
@@ -116,7 +129,7 @@ def fill_by_model(content: TableContent = Depends()):
     return [content(a1, *params) for a1 in content.arg1]
 
 
-@router.post("/{model}/estimate/", response_model=dict[int, float])
+@router.post("/{model}/estimate/", response_model=dict[str, float])
 def estimate_parameter(
     entries: list[float | None],
     content: TableContent = Depends(),
@@ -133,22 +146,31 @@ def estimate_parameter(
         return [
             p if p is not None else next(iter_parameters)
             for p in content.ordered_params.values()
-        ]
+        ] + list(iter_parameters)
 
     arguments: list
     if content.arg2:
         arguments = [[a, b] for b in content.arg2 for a in content.arg1]
 
         def optim_model(args: list, *parameters: float):
-            return np.array([content(*arg, *params(parameters)) for arg in args])
+            p = params(parameters)
+            return np.array([content(*arg, *p) for arg in args])
 
     else:
         arguments = content.arg1
 
         def optim_model(args: list, *parameters: float):
-            return np.array([content(arg, *params(parameters)) for arg in args])
+            p = params(parameters)
+            return np.array([content(arg, *p) for arg in args])
 
-    keys = [k for k, v in content.ordered_params.items() if v is None]
+    keys = [str(k) for k, v in content.ordered_params.items() if v is None]
+
+    if content.displacement[0] is None:
+        keys += ["c0"]
+    if content.displacement[1] is None:
+        keys += ["cx"]
+    if content.displacement[2] is None:
+        keys += ["cy"]
 
     assert len(entries) == len(arguments)
 
