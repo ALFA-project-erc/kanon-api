@@ -1,3 +1,4 @@
+import typing
 from enum import Enum
 from functools import partial
 from typing import cast
@@ -9,7 +10,7 @@ from kanon_api.utils import build_safe_dict_resolver
 
 from .utils import mod
 
-Houses = tuple[
+Houses = typing.Tuple[
     BasedReal,
     BasedReal,
     BasedReal,
