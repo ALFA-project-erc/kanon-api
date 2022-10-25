@@ -1,7 +1,6 @@
 import json
-import typing
 from pathlib import Path
-from typing import Tuple, Type, TypeVar, cast
+from typing import Type, TypeVar, cast
 
 from kanon.tables.htable import HTable
 from kanon.tables.symmetries import Symmetry
@@ -19,7 +18,7 @@ mirror = Symmetry("mirror")
 
 
 class CelestialBody(metaclass=DeferedMeta):
-    def __init__(self, tset: "TableSet", mean_motion: Tuple[str, str] | None):
+    def __init__(self, tset: "TableSet", mean_motion: tuple[str, str] | None):
         self.tset = tset
         if mean_motion:
             self.mean_motion = make_mean_motion(mean_motion)
@@ -29,8 +28,8 @@ class FixedStars(CelestialBody):
     def __init__(
         self,
         tset: "TableSet",
-        mean_motion: Tuple[str, str],
-        access_recess_mm: Tuple[str, str],
+        mean_motion: tuple[str, str],
+        access_recess_mm: tuple[str, str],
         access_recess_eq: TableInput,
     ):
         super().__init__(tset, mean_motion)
@@ -42,8 +41,8 @@ class Moon(CelestialBody):
     def __init__(
         self,
         tset: "TableSet",
-        mean_motion: Tuple[str, str],
-        mean_argument: Tuple[str, str],
+        mean_motion: tuple[str, str],
+        mean_argument: tuple[str, str],
         equation_center: TableInput,
         equation_arg: TableInput,
         minuta_proportionalia: TableInput,
@@ -61,7 +60,7 @@ class Planet(CelestialBody):
     def __init__(
         self,
         tset: "TableSet",
-        mean_motion: Tuple[str, str] | None,
+        mean_motion: tuple[str, str] | None,
         apogee_radix: str | None,
     ):
         super().__init__(tset, mean_motion)
@@ -83,7 +82,7 @@ class Sun(Planet):
     def __init__(
         self,
         tset: "TableSet",
-        mean_motion: Tuple[str, str],
+        mean_motion: tuple[str, str],
         apogee_radix: str,
         equation: TableInput,
     ):
@@ -101,7 +100,7 @@ class SuperiorPlanet(Planet):
         min_prop: TableInput,
         long_longior: TableInput,
         long_propior: TableInput,
-        mean_motion: Tuple[str, str] | None,
+        mean_motion: tuple[str, str] | None,
     ):
         super().__init__(tset, mean_motion, apogee_radix)
         self.center_equation = read_table_input(center_equation)
@@ -132,9 +131,9 @@ class InferiorPlanet(SuperiorPlanet):
         min_prop: TableInput,
         long_longior: TableInput,
         long_propior: TableInput,
-        mean_argument: Tuple[str, str],
+        mean_argument: tuple[str, str],
         apogee_radix: str | None = None,
-        mean_motion: Tuple[str, str] | None = None,
+        mean_motion: tuple[str, str] | None = None,
     ):
         super().__init__(
             tset,
@@ -165,10 +164,10 @@ def reverse_table(tab: HTable) -> HTable:
 
 
 class ObliqueAscension(metaclass=DeferedMeta):
-    def __init__(self, tables: typing.Dict[float, int]):
+    def __init__(self, tables: dict[float, int]):
         self.tables = {float(k): read_dishas(v) for k, v in tables.items()}
 
-    def _find_index(self, latitude: float) -> Tuple[float, float | None, float]:
+    def _find_index(self, latitude: float) -> tuple[float, float | None, float]:
         tab = self.tables
 
         if (
