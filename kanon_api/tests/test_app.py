@@ -21,6 +21,15 @@ client = TestClient(app)
         ("parisian_alphonsine_tables", "venus", sdate, 1, 3, "2,1;27,13"),
         ("parisian_alphonsine_tables", "mercury", sdate, 1, 1, "2,13;5,1"),
         ("parisian_alphonsine_tables", "sun", (10, 52, 13), 1, 1, HTTPException),
+        ("toledan_tables", "sun", sdate, 1, 1, "13 ; 35,23"),
+        ("toledan_tables", "sun", (10, 2, 13), 2, 4, "04,07 ; 42,54"),
+        # ERROR: astropy.units.core.UnitConversionError
+        # ("toledan_tables", "moon", sdate, 3, 1, "4,19;35,55"),
+        # ERROR: concurrent.futures.process.BrokenProcessPool
+        # ("toledan_tables", "saturn", sdate, 1, 1, "1,47;5,1"),
+        # ("toledan_tables", "venus", sdate, 1, 3, "2,1;27,13"),
+        # ("toledan_tables", "mercury", sdate, 1, 1, "2,13;5,1"),
+        ("toledan_tables", "sun", (10, 52, 13), 1, 1, HTTPException),
     ],
 )
 def test_get_truepos(ts, planet, date, nval, step, result):
@@ -185,7 +194,10 @@ def test_health_check():
 
 @pytest.mark.parametrize(
     "ts, result0, result1",
-    [("parisian_alphonsine_tables", "03,16 ; 11,46", "03,15 ; 42,00")],
+    [
+        ("parisian_alphonsine_tables", "03,16 ; 11,46", "03,15 ; 42,00"),
+        ("toledan_tables", "01,54 ; 23,19", "01,56 ; 09,57"),
+    ],
 )
 def test_get_ascendant(ts, result0, result1):
     response = client.get(
@@ -245,7 +257,15 @@ def test_calendars_get_infos():
 
 @pytest.mark.parametrize(
     "ts, result0, result11, result10",
-    [("parisian_alphonsine_tables", "03,16 ; 11,46", "02,46 ; 34,47", "02,15 ; 00,47")],
+    [
+        (
+            "parisian_alphonsine_tables",
+            "03,16 ; 11,46",
+            "02,46 ; 34,47",
+            "02,15 ; 00,47",
+        ),
+        ("toledan_tables", "01,54 ; 23,19", "01,20 ; 46,36", "49 ; 33,45"),
+    ],
 )
 def test_houses(ts, result0, result11, result10):
     response = client.get(

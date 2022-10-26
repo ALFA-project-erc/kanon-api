@@ -27,6 +27,8 @@ julian_calendar = Calendar.registry["Julian A.D."]
     [
         (TableSets.parisian_alphonsine_tables, (1327, 7, 3), "1,47;18,48"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), "05,22 ; 56,25"),
+        (TableSets.toledan_tables, (1327, 7, 3), "13 ; 35,23"),
+        (TableSets.toledan_tables, (10, 2, 13), "04,07 ; 42,54"),
     ],
 )
 def test_true_sun(ts, ymd, result):
@@ -43,6 +45,11 @@ def test_true_sun(ts, ymd, result):
         (TableSets.parisian_alphonsine_tables, (1403, 3, 12), "3,28;15,28"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), "01,14 ; 42,27"),
         (TableSets.parisian_alphonsine_tables, (1327, 7, 11), "5,57 ; 18,24"),
+        # ERROR: astropy.units.core.UnitConversionError
+        # (TableSets.toledan_tables, (1327, 7, 3), "4,19;35,55"),
+        # (TableSets.toledan_tables, (1403, 3, 12), "3,28;15,28"),
+        # (TableSets.toledan_tables, (10, 2, 13), "01,14 ; 42,27"),
+        # (TableSets.toledan_tables, (1327, 7, 11), "5,57 ; 18,24"),
     ],
 )
 def test_true_moon(ts, ymd, result):
@@ -63,6 +70,15 @@ def test_true_moon(ts, ymd, result):
         (TableSets.parisian_alphonsine_tables(Venus), (1327, 7, 3), "2,1;27,13"),
         (TableSets.parisian_alphonsine_tables(Venus), (7, 2, 23), "01 ; 07,13"),
         (TableSets.parisian_alphonsine_tables(Mercury), (7, 3, 26), "05,38 ; 38,43"),
+        # ERROR: AttributeError: '<Planet>' object has no attribute 'min_prop'
+        # (TableSets.toledan_tables(Mars), (1327, 7, 3), "2,14;52,23"),
+        # (TableSets.toledan_tables(Mars), (10, 2, 13), "05,40 ; 42,26"),
+        # (TableSets.toledan_tables(Saturn), (1327, 7, 3), "1,47;5,1"),
+        # (TableSets.toledan_tables(Jupiter), (1327, 7, 3), "2,14;35,29"),
+        # (TableSets.toledan_tables(Mercury), (7, 3, 26), "05,38 ; 38,43"),
+        # (TableSets.toledan_tables(Mercury), (1327, 7, 3), "2,13;5,1"),
+        # (TableSets.toledan_tables(Venus), (7, 2, 23), "01 ; 07,13"),
+        # (TableSets.toledan_tables(Venus), (1327, 7, 3), "2,1;27,13"),
     ],
 )
 def test_planet_true_pos(planet, ymd, result):
@@ -82,6 +98,13 @@ def test_planet_true_pos(planet, ymd, result):
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 10, "01,03 ; 44,16"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 49, "01,25 ; 05,16"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 48, "01,25 ; 05,16"),
+        (TableSets.toledan_tables, (1327, 7, 3), 0.5, 31, "01,54 ; 23,19"),
+        (TableSets.toledan_tables, (1327, 7, 3), 0.6, 31, "02,24 ; 32,18"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 43, "05,18 ; 31,15"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 30, "05,25 ; 43,00"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 10, "05,30 ; 27,47"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 49, "05,13 ; 24,05"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 48, "05,13 ; 24,05"),
     ],
 )
 def test_ascendant(ts, date, hours, latitude, result):
@@ -115,6 +138,30 @@ def test_ascendant(ts, date, hours, latitude, result):
         ),
         (
             TableSets.parisian_alphonsine_tables,
+            HouseMethods.M6,
+            "04,56 ; 38",
+            "01,56 ; 38",
+        ),
+        (
+            TableSets.toledan_tables,
+            HouseMethods.M1,
+            "05,03 ; 23",
+            "02,03 ; 23",
+        ),
+        (
+            TableSets.toledan_tables,
+            HouseMethods.M2,
+            "05,05 ; 27",
+            "02,05 ; 27",
+        ),
+        (
+            TableSets.toledan_tables,
+            HouseMethods.M5,
+            "04,52 ; 29",
+            "01,52 ; 29",
+        ),
+        (
+            TableSets.toledan_tables,
             HouseMethods.M6,
             "04,56 ; 38",
             "01,56 ; 38",

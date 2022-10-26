@@ -30,3 +30,9 @@ sudo apt install pre-commit
 
 pre-commit install
 ```
+
+## Run tests
+
+```bash
+poetry run pytest --cov=kanon_api
+```
