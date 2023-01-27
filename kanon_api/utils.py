@@ -123,7 +123,9 @@ class DeferedMeta(type):
             try:
                 if not object.__getattribute__(self, "_initialized"):
                     self._initialized = True
-                    object.__getattribute__(self, "__init__")(*self._args, **self._kwargs)
+                    object.__getattribute__(self, "__init__")(
+                        *self._args, **self._kwargs
+                    )
             except AttributeError:
                 pass
             return object.__getattribute__(self, attr)

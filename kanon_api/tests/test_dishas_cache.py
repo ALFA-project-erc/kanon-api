@@ -46,7 +46,6 @@ def test_dishas_cache():
     assert len(files) > 0
     assert len(files) == len(set(cached_tables))
 
-
     mock_open: mock.MagicMock = mock.MagicMock(wraps=open)
 
     with mock.patch("builtins.open", mock_open):
