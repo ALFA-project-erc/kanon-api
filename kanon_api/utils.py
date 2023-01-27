@@ -119,17 +119,18 @@ class DeferedMeta(type):
         if settings.PRODUCTION:
             return super().__call__(*args, **kwargs)
 
-        def init_before_get(obj, attr):
+        def init_before_get(self, attr):
             try:
-                if not object.__getattribute__(obj, "_initialized"):
-                    obj._initialized = True
-                    object.__getattribute__(obj, "__init__")(*args, **kwargs)
+                if not object.__getattribute__(self, "_initialized"):
+                    self._initialized = True
+                    object.__getattribute__(self, "__init__")(*self._args, **self._kwargs)
             except AttributeError:
                 pass
-            return object.__getattribute__(obj, attr)
+            return object.__getattribute__(self, attr)
 
         cls.__getattribute__ = init_before_get
-
         new_obj = cls.__new__(cls, *args, **kwargs)
         new_obj._initialized = False
+        new_obj._args = args
+        new_obj._kwargs = kwargs
         return new_obj
