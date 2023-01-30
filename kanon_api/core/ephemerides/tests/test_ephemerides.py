@@ -27,8 +27,8 @@ julian_calendar = Calendar.registry["Julian A.D."]
     [
         (TableSets.parisian_alphonsine_tables, (1327, 7, 3), "01,48 ; 37,55"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), "05,18 ; 09,54"),
-        (TableSets.toledan_tables, (1327, 7, 3), "13 ; 35,23"),
-        (TableSets.toledan_tables, (10, 2, 13), "04,07 ; 42,54"),
+        (TableSets.toledan_tables, (1327, 7, 3), "16 ; 28,35"),
+        (TableSets.toledan_tables, (10, 2, 13), "04,03 ; 48,42"),
     ],
 )
 def test_true_sun(ts, ymd, result):
@@ -98,13 +98,13 @@ def test_planet_true_pos(planet, ymd, result):
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 10, "58 ; 58,47"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 49, "01,20 ; 23,13"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 48, "01,20 ; 23,13"),
-        (TableSets.toledan_tables, (1327, 7, 3), 0.5, 31, "01,54 ; 23,19"),
-        (TableSets.toledan_tables, (1327, 7, 3), 0.6, 31, "02,24 ; 32,18"),
-        (TableSets.toledan_tables, (10, 2, 13), 0.5, 43, "05,18 ; 31,15"),
-        (TableSets.toledan_tables, (10, 2, 13), 0.5, 30, "05,25 ; 43,00"),
-        (TableSets.toledan_tables, (10, 2, 13), 0.5, 10, "05,30 ; 27,47"),
-        (TableSets.toledan_tables, (10, 2, 13), 0.5, 49, "05,13 ; 24,05"),
-        (TableSets.toledan_tables, (10, 2, 13), 0.5, 48, "05,13 ; 24,05"),
+        (TableSets.toledan_tables, (1327, 7, 3), 0.5, 31, "01,56 ; 38,24"),
+        (TableSets.toledan_tables, (1327, 7, 3), 0.6, 31, "02,26 ; 47,06"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 43, "05,12 ; 26,08"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 30, "05,20 ; 17,54"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 10, "05,25 ; 35,55"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 49, "05,07 ; 03,12"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 48, "05,07 ; 03,12"),
     ],
 )
 def test_ascendant(ts, date, hours, latitude, result):

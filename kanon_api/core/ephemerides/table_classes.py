@@ -237,11 +237,12 @@ TableComp = CelestialBody | ObliqueAscension | RightAscension
 T = TypeVar("T", bound=TableComp)
 
 
+TABLE_SET_DIRECTORY = Path(__file__).parent / "table_sets"
+
+
 class TableSet:
     def __init__(self, file_name: str) -> None:
-        with Path(__file__).parent.joinpath("table_sets", file_name).open(
-            mode="r"
-        ) as f:
+        with (TABLE_SET_DIRECTORY / file_name).open(mode="r") as f:
             data = json.load(f)
         self.FixedStars = FixedStars(self, **data["FixedStars"])
         self.Sun = Sun(self, **data["Sun"])
