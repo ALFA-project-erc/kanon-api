@@ -14,8 +14,8 @@ client = TestClient(app)
 @pytest.mark.parametrize(
     "ts, planet, date, step, nval, result",
     [
-        ("parisian_alphonsine_tables", "sun", sdate, 1, 1, "1,47;18,48"),
-        ("parisian_alphonsine_tables", "sun", (10, 2, 13), 2, 4, "05,22 ; 56,25"),
+        ("parisian_alphonsine_tables", "sun", sdate, 1, 1, "01,48 ; 37,55"),
+        ("parisian_alphonsine_tables", "sun", (10, 2, 13), 2, 4, "05,18 ; 09,54"),
         ("parisian_alphonsine_tables", "moon", sdate, 3, 1, "4,19;35,55"),
         ("parisian_alphonsine_tables", "saturn", sdate, 1, 1, "1,47;5,1"),
         ("parisian_alphonsine_tables", "venus", sdate, 1, 3, "2,1;27,13"),
@@ -195,7 +195,7 @@ def test_health_check():
 @pytest.mark.parametrize(
     "ts, result0, result1",
     [
-        ("parisian_alphonsine_tables", "03,16 ; 11,46", "03,15 ; 42,00"),
+        ("parisian_alphonsine_tables", "03,17 ; 23,48", "03,16 ; 51,51"),
         ("toledan_tables", "01,54 ; 23,19", "01,56 ; 09,57"),
     ],
 )
@@ -260,9 +260,9 @@ def test_calendars_get_infos():
     [
         (
             "parisian_alphonsine_tables",
-            "03,16 ; 11,46",
-            "02,46 ; 34,47",
-            "02,15 ; 00,47",
+            "03,17 ; 23,48",
+            "02,47 ; 49,18",
+            "02,16 ; 20,03",
         ),
         ("toledan_tables", "01,54 ; 23,19", "01,20 ; 46,36", "49 ; 33,45"),
     ],

@@ -11,7 +11,7 @@ def sun_true_pos(table_set: TableSet, days: float) -> BasedQuantity:
 
     eq_sun = table_set.Sun.equation(mod(mean_arg_sun))
 
-    true_pos_sun = mod(mean_sun_pos - eq_sun)
+    true_pos_sun = mod(mean_sun_pos + eq_sun)
 
     return true_pos_sun
 
