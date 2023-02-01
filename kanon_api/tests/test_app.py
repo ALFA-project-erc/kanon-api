@@ -23,12 +23,9 @@ client = TestClient(app)
         ("parisian_alphonsine_tables", "sun", (10, 52, 13), 1, 1, HTTPException),
         ("toledan_tables", "sun", sdate, 1, 1, "16 ; 28,35"),
         ("toledan_tables", "sun", (10, 2, 13), 2, 4, "04,03 ; 48,42"),
-        # ERROR: astropy.units.core.UnitConversionError
-        # ERROR ('d' (time) and 'deg' (angle) are not convertible)
-        # ("toledan_tables", "moon", sdate, 3, 1, "4,19;35,55"),
-        # ("toledan_tables", "mercury", sdate, 1, 1, "2,13;5,1"),
-        # ERROR pos6h > pos12h > pos13h30
-        # ("toledan_tables", "saturn", sdate, 1, 1, "03,30 ; 53,01"),
+        ("toledan_tables", "moon", sdate, 3, 1, "05,58 ; 48,19"),
+        ("toledan_tables", "mercury", sdate, 1, 1, "14 ; 02,48"),
+        ("toledan_tables", "saturn", sdate, 1, 1, "03,30 ; 53,01"),
         ("toledan_tables", "venus", sdate, 1, 3, "09 ; 22,17"),
         ("toledan_tables", "sun", (10, 52, 13), 1, 1, HTTPException),
     ],
