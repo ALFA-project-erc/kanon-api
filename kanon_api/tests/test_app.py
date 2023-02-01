@@ -21,6 +21,13 @@ client = TestClient(app)
         ("parisian_alphonsine_tables", "venus", sdate, 1, 3, "2,1;27,13"),
         ("parisian_alphonsine_tables", "mercury", sdate, 1, 1, "2,13;5,1"),
         ("parisian_alphonsine_tables", "sun", (10, 52, 13), 1, 1, HTTPException),
+        ("toledan_tables", "sun", sdate, 1, 1, "16 ; 28,35"),
+        ("toledan_tables", "sun", (10, 2, 13), 2, 4, "04,03 ; 48,42"),
+        ("toledan_tables", "moon", sdate, 3, 1, "05,58 ; 48,19"),
+        ("toledan_tables", "mercury", sdate, 1, 1, "14 ; 02,48"),
+        ("toledan_tables", "saturn", sdate, 1, 1, "03,30 ; 53,01"),
+        ("toledan_tables", "venus", sdate, 1, 3, "09 ; 22,17"),
+        ("toledan_tables", "sun", (10, 52, 13), 1, 1, HTTPException),
     ],
 )
 def test_get_truepos(ts, planet, date, nval, step, result):
@@ -56,35 +63,37 @@ def test_get_truepos(ts, planet, date, nval, step, result):
         for idx, val in enumerate(content)
     )
 
-    with TestClient(app) as client:
-        response6h = client.get(
-            f"ephemerides/{ts}/{planet}/true_pos",
-            params={
-                "year": y,
-                "month": m,
-                "day": d,
-                "hours": 6,
-                "number_of_values": nval,
-                "step": step,
-            },
-        )
-        response13h30 = client.get(
-            f"ephemerides/{ts}/{planet}/true_pos",
-            params={
-                "year": y,
-                "month": m,
-                "day": d,
-                "hours": 13,
-                "minutes": 30,
-                "number_of_values": nval,
-                "step": step,
-            },
-        )
-
-    pos6h = Sexagesimal(response6h.json()[0]["position"])
-    pos13h30 = Sexagesimal(response13h30.json()[0]["position"])
-
-    assert pos6h < pos12h < pos13h30
+    # NOTE: this test is not useful because retrogradations
+    # NOTE: can cause positions to be in any order
+    # with TestClient(app) as client:
+    #     response6h = client.get(
+    #         f"ephemerides/{ts}/{planet}/true_pos",
+    #         params={
+    #             "year": y,
+    #             "month": m,
+    #             "day": d,
+    #             "hours": 6,
+    #             "number_of_values": nval,
+    #             "step": step,
+    #         },
+    #     )
+    #     response13h30 = client.get(
+    #         f"ephemerides/{ts}/{planet}/true_pos",
+    #         params={
+    #             "year": y,
+    #             "month": m,
+    #             "day": d,
+    #             "hours": 13,
+    #             "minutes": 30,
+    #             "number_of_values": nval,
+    #             "step": step,
+    #         },
+    #     )
+    #
+    # pos6h = Sexagesimal(response6h.json()[0]["position"])
+    # pos13h30 = Sexagesimal(response13h30.json()[0]["position"])
+    #
+    # assert pos6h < pos12h < pos13h30
 
 
 @pytest.mark.parametrize(
@@ -185,7 +194,10 @@ def test_health_check():
 
 @pytest.mark.parametrize(
     "ts, result0, result1",
-    [("parisian_alphonsine_tables", "03,16 ; 11,46", "03,15 ; 42,00")],
+    [
+        ("parisian_alphonsine_tables", "03,16 ; 11,46", "03,15 ; 42,00"),
+        ("toledan_tables", "01,56 ; 38,24", "01,58 ; 21,38"),
+    ],
 )
 def test_get_ascendant(ts, result0, result1):
     response = client.get(
@@ -245,7 +257,15 @@ def test_calendars_get_infos():
 
 @pytest.mark.parametrize(
     "ts, result0, result11, result10",
-    [("parisian_alphonsine_tables", "03,16 ; 11,46", "02,46 ; 34,47", "02,15 ; 00,47")],
+    [
+        (
+            "parisian_alphonsine_tables",
+            "03,16 ; 11,46",
+            "02,46 ; 34,47",
+            "02,15 ; 00,47",
+        ),
+        ("toledan_tables", "01,56 ; 38,24", "01,23 ; 14,24", "52 ; 05,46"),
+    ],
 )
 def test_houses(ts, result0, result11, result10):
     response = client.get(

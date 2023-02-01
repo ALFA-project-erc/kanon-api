@@ -27,6 +27,8 @@ julian_calendar = Calendar.registry["Julian A.D."]
     [
         (TableSets.parisian_alphonsine_tables, (1327, 7, 3), "01,47 ; 18,48"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), "05,22 ; 27,44"),
+        (TableSets.toledan_tables, (1327, 7, 3), "16 ; 28,35"),
+        (TableSets.toledan_tables, (10, 2, 13), "04,03 ; 48,42"),
     ],
 )
 def test_true_sun(ts, ymd, result):
@@ -43,6 +45,10 @@ def test_true_sun(ts, ymd, result):
         (TableSets.parisian_alphonsine_tables, (1403, 3, 12), "3,28;15,28"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), "01,14 ; 42,27"),
         (TableSets.parisian_alphonsine_tables, (1327, 7, 11), "5,57 ; 18,24"),
+        (TableSets.toledan_tables, (1327, 7, 3), "05,58 ; 48,19"),
+        (TableSets.toledan_tables, (1403, 3, 12), "05,07 ; 00,56"),
+        (TableSets.toledan_tables, (10, 2, 13), "03,14 ; 16,20"),
+        (TableSets.toledan_tables, (1327, 7, 11), "01,38 ; 24,22"),
     ],
 )
 def test_true_moon(ts, ymd, result):
@@ -63,6 +69,14 @@ def test_true_moon(ts, ymd, result):
         (TableSets.parisian_alphonsine_tables(Venus), (1327, 7, 3), "2,1;27,13"),
         (TableSets.parisian_alphonsine_tables(Venus), (7, 2, 23), "01 ; 07,13"),
         (TableSets.parisian_alphonsine_tables(Mercury), (7, 3, 26), "05,38 ; 38,43"),
+        (TableSets.toledan_tables(Mars), (1327, 7, 3), "02,17 ; 51,29"),
+        (TableSets.toledan_tables(Mars), (10, 2, 13), "05,17 ; 22,59"),
+        (TableSets.toledan_tables(Saturn), (1327, 7, 3), "03,30 ; 53,01"),
+        (TableSets.toledan_tables(Jupiter), (1327, 7, 3), "04,14 ; 12,32"),
+        (TableSets.toledan_tables(Mercury), (7, 3, 26), "04,49 ; 17,54"),
+        (TableSets.toledan_tables(Mercury), (1327, 7, 3), "14 ; 02,48"),
+        (TableSets.toledan_tables(Venus), (7, 2, 23), "04,22 ; 10,53"),
+        (TableSets.toledan_tables(Venus), (1327, 7, 3), "09 ; 22,17"),
     ],
 )
 def test_planet_true_pos(planet, ymd, result):
@@ -82,6 +96,13 @@ def test_planet_true_pos(planet, ymd, result):
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 10, "01,03 ; 16,05"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 49, "01,24 ; 37,26"),
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), 0.5, 48, "01,24 ; 37,26"),
+        (TableSets.toledan_tables, (1327, 7, 3), 0.5, 31, "01,56 ; 38,24"),
+        (TableSets.toledan_tables, (1327, 7, 3), 0.6, 31, "02,26 ; 47,06"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 43, "05,12 ; 26,08"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 30, "05,20 ; 17,54"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 10, "05,25 ; 35,55"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 49, "05,07 ; 03,12"),
+        (TableSets.toledan_tables, (10, 2, 13), 0.5, 48, "05,07 ; 03,12"),
     ],
 )
 def test_ascendant(ts, date, hours, latitude, result):
@@ -115,6 +136,30 @@ def test_ascendant(ts, date, hours, latitude, result):
         ),
         (
             TableSets.parisian_alphonsine_tables,
+            HouseMethods.M6,
+            "04,56 ; 38",
+            "01,56 ; 38",
+        ),
+        (
+            TableSets.toledan_tables,
+            HouseMethods.M1,
+            "05,03 ; 23",
+            "02,03 ; 23",
+        ),
+        (
+            TableSets.toledan_tables,
+            HouseMethods.M2,
+            "05,05 ; 27",
+            "02,05 ; 27",
+        ),
+        (
+            TableSets.toledan_tables,
+            HouseMethods.M5,
+            "04,52 ; 29",
+            "01,52 ; 29",
+        ),
+        (
+            TableSets.toledan_tables,
             HouseMethods.M6,
             "04,56 ; 38",
             "01,56 ; 38",
