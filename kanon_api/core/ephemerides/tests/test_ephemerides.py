@@ -46,10 +46,10 @@ def test_true_sun(ts, ymd, result):
         (TableSets.parisian_alphonsine_tables, (10, 2, 13), "01,14 ; 42,27"),
         (TableSets.parisian_alphonsine_tables, (1327, 7, 11), "5,57 ; 18,24"),
         # ERROR: astropy.units.core.UnitConversionError
-        # (TableSets.toledan_tables, (1327, 7, 3), "4,19;35,55"),
-        # (TableSets.toledan_tables, (1403, 3, 12), "3,28;15,28"),
-        # (TableSets.toledan_tables, (10, 2, 13), "01,14 ; 42,27"),
-        # (TableSets.toledan_tables, (1327, 7, 11), "5,57 ; 18,24"),
+        (TableSets.toledan_tables, (1327, 7, 3), "05,58 ; 48,19"),
+        (TableSets.toledan_tables, (1403, 3, 12), "05,07 ; 00,56"),
+        (TableSets.toledan_tables, (10, 2, 13), "03,14 ; 16,20"),
+        (TableSets.toledan_tables, (1327, 7, 11), "01,38 ; 24,22"),
     ],
 )
 def test_true_moon(ts, ymd, result):
@@ -67,18 +67,18 @@ def test_true_moon(ts, ymd, result):
         (TableSets.parisian_alphonsine_tables(Saturn), (1327, 7, 3), "1,47;5,1"),
         (TableSets.parisian_alphonsine_tables(Jupiter), (1327, 7, 3), "2,14;35,29"),
         (TableSets.parisian_alphonsine_tables(Mercury), (1327, 7, 3), "2,13;5,1"),
+        (TableSets.parisian_alphonsine_tables(Mercury), (7, 3, 26), "05,38 ; 38,43"),
         (TableSets.parisian_alphonsine_tables(Venus), (1327, 7, 3), "2,1;27,13"),
         (TableSets.parisian_alphonsine_tables(Venus), (7, 2, 23), "01 ; 07,13"),
-        (TableSets.parisian_alphonsine_tables(Mercury), (7, 3, 26), "05,38 ; 38,43"),
-        # ERROR: AttributeError: '<Planet>' object has no attribute 'min_prop'
-        # (TableSets.toledan_tables(Mars), (1327, 7, 3), "2,14;52,23"),
-        # (TableSets.toledan_tables(Mars), (10, 2, 13), "05,40 ; 42,26"),
-        # (TableSets.toledan_tables(Saturn), (1327, 7, 3), "1,47;5,1"),
-        # (TableSets.toledan_tables(Jupiter), (1327, 7, 3), "2,14;35,29"),
+        (TableSets.toledan_tables(Mars), (1327, 7, 3), "02,17 ; 51,29"),
+        (TableSets.toledan_tables(Mars), (10, 2, 13), "05,17 ; 22,59"),
+        (TableSets.toledan_tables(Saturn), (1327, 7, 3), "03,30 ; 53,01"),
+        (TableSets.toledan_tables(Jupiter), (1327, 7, 3), "04,14 ; 12,32"),
+        # ERROR: astropy.units.core.UnitConversionError
         # (TableSets.toledan_tables(Mercury), (7, 3, 26), "05,38 ; 38,43"),
         # (TableSets.toledan_tables(Mercury), (1327, 7, 3), "2,13;5,1"),
-        # (TableSets.toledan_tables(Venus), (7, 2, 23), "01 ; 07,13"),
-        # (TableSets.toledan_tables(Venus), (1327, 7, 3), "2,1;27,13"),
+        (TableSets.toledan_tables(Venus), (7, 2, 23), "04,22 ; 10,53"),
+        (TableSets.toledan_tables(Venus), (1327, 7, 3), "09 ; 22,17"),
     ],
 )
 def test_planet_true_pos(planet, ymd, result):
